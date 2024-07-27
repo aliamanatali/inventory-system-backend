@@ -1,0 +1,8 @@
+npx sequelize-cli model:generate --name Product --attributes name:string,qrCode:integer,category:string,purchaseDate:date,warrantyDate:date,condition:string,status:string,assignedTo:integer
+npx sequelize-cli model:generate --name User --attributes 
+name:string,
+email:string,
+password:string,
+department:string,
+role:string
+npx sequelize-cli model:generate --name Ticket --attributes userId:integer,category:string,description:string,status:string
