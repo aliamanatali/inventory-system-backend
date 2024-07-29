@@ -65,6 +65,7 @@ async function getAssignedProducts(req, res) {
   }
 }
 
+
 module.exports = {
   assignProduct,
   getAssignedProducts,

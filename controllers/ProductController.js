@@ -1,6 +1,5 @@
-const { Product } = require("../models"); // Adjust the path to your models
+const { Product, AssignedProduct } = require("../models"); // Adjust the path to your models
 
-// Get all products
 async function getAllProducts(req, res) {
   try {
     const products = await Product.findAll();
@@ -11,8 +10,6 @@ async function getAllProducts(req, res) {
   }
 }
 
-
-// Create a new product
 async function createProduct(req, res) {
   try {
     const {
@@ -59,19 +56,16 @@ async function editProduct(req, res) {
     const { id } = req.params;
     const { name, qrCode, category, purchaseDate, warrantyDate, condition, status } = req.body;
 
-    // Check if the product exists
     const product = await Product.findByPk(id);
     if (!product) {
       return res.status(404).json({ error: "Product not found" });
     }
 
-    // Update the product
     await Product.update(
       { name, qrCode, category, purchaseDate, warrantyDate, condition, status },
       { where: { id } }
     );
 
-    // Fetch the updated product
     const updatedProduct = await Product.findByPk(id);
     return res.status(200).json(updatedProduct);
   } catch (error) {
@@ -81,7 +75,6 @@ async function editProduct(req, res) {
 }
 
 
-// Delete a product
 async function deleteProduct(req, res) {
   try {
     const { id } = req.params;
@@ -92,13 +85,19 @@ async function deleteProduct(req, res) {
       return res.status(404).json({ error: "Product not found" });
     }
 
+    const assignedProduct = await AssignedProduct.find({ where: { productId: id } });
+
+    await assignedProduct.destroy();
+
     await product.destroy();
-    res.status(200).json({ message: "Product deleted successfully" });
+
+    res.status(200).json({ message: "Product and its assignments deleted successfully" });
   } catch (error) {
     console.error("Error deleting product:", error);
     res.status(500).json({ error: "Error deleting product" });
   }
 }
+
 
 module.exports = {
   getAllProducts,
