@@ -4,6 +4,6 @@ const router = express.Router();
 const assignedProductController = require('../controllers/AssignedProductController');
 
 router.post('/assign', assignedProductController.assignProduct);
-router.get('/assigned-products', assignedProductController.getAssignedProducts);
+router.get('/assign/:userId', assignedProductController.getAssignedProductsByUserId);
 
 module.exports = router;

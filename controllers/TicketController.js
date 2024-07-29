@@ -1,3 +1,4 @@
+
 const { Ticket } = require('../models');
 
 const createTicket = async (req, res) => {
@@ -20,7 +21,6 @@ async function getAllTickets(req, res) {
   }
 }
 
-
 const getTicketsByUserId = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -31,11 +31,11 @@ const getTicketsByUserId = async (req, res) => {
   }
 };
 
-
 const editTicket = async (req, res) => {
   try {
     const { id } = req.params;
-    const { userId, category, description, status } = req.body;
+    let { userId, category, description, status } = req.body;
+    status = "Resolved";
     const [updated] = await Ticket.update({ userId, category, description, status }, {
       where: { id }
     });
@@ -73,3 +73,4 @@ module.exports = {
   getAllTickets,
   getTicketsByUserId
 };
+
