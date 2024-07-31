@@ -85,7 +85,7 @@ async function deleteProduct(req, res) {
       return res.status(404).json({ error: "Product not found" });
     }
 
-    const assignedProduct = await AssignedProduct.find({ where: { productId: id } });
+    const assignedProduct = await AssignedProduct.findOne({ where: { productId: id } });
 
     await assignedProduct.destroy();
 
